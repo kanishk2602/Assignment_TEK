@@ -6,6 +6,7 @@ DBMS is:
 
 database - operaional system
 datawarehouse - management system 
+Datawarehouse does not require any unique value.
 
 Granularity in datawarehouse - it tells the level of analysis we need to do (hourly, weekly, monthly basis)
 
@@ -31,9 +32,9 @@ Kimball theory :
 - A data mart can consist of one or multiple star schema.
 - Dimension are descriptive in nature which are part of star schema.
 
--  
+- Data collected in fact table is historic.
 
-- data collected in fact table is historic.
+- Mapping is a set of instruction
 - 
 
 Inmon theory
