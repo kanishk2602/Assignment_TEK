@@ -1,0 +1,32 @@
+Hive File Format:
+-----------------
+
+*. In hive 'stored as' is used for different file format.
+
+AVRO:
+
+*. AVRO format is row based storage format for Hadoop. Data will be inserted Rowwise.
+*. AVRO file format stores the schema of the table in JSON format, making it easy to read and interpret.
+  avro json schema : {empid:int, name:varchar(50)}
+*. Data is stored in Binary format making size compact and efficient.
+structure -:
+	header block1 block2 .... blockN
+header - file header + file metadata
+
+PARQUET:
+
+*. An open source file format for hadoop as well as used by spark. It stores data in columnwise format.
+	column1 : value,
+	column2 : value,
+	.
+	.
+	.
+*. Parquet file format is more efficient in terms of storage and performances.
+*. Parquet file format is good for executing queries.
+*. Parquet format compresses the original size file as well.
+
+ORC (Optimised Row Column):
+
+*. Highly efficient way to store the data, it is designed to overcome the limitations of other file format.
+*. ORC format stores data in compact format and enables skipping over irrelevant data parts.
+

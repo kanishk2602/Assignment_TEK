@@ -1,0 +1,51 @@
+HIVE
+----
+*. It is a data warehousing infrastructure based on Apache Hadoop.
+*. It is used for running ad-hoc queries(similar to sql).
+*. Hive uses a default location to store files "/user/hive/warehouse" (this is location where all DB, tables are stored)
+								   (this location can be accessed by other data processing tool eg. Spark)
+
+
+----- ----> 1.) Hive CLI (command line interface) -> single instance
+hive  ----> 2.) Beeline (CLI) -> allows multiple instances [Beeline need HiveServer2]
+----- ----> 3.) .hql file
+      ----> 4.) web editor [HUE]
+
+
+*. Hive queries will run as mapreduce job(Mapper+sort+shiffle+Reducer)
+*.Hive need presence of Traditional RDBMS (SQL,DERBY,SQLlite) (default DERBY database) as metadeta is stored in traditional database.
+
+user1->
+	 Hive(runjar) --> Drivers 
+				--> Compiler --> Optimiser --> Executor
+				     (DAG)
+user2->				
+                                    
+Compiler:
+- Checks for error (syntax)
+- DAG (Directed Acyclic Graph) -> flow of execution will be created. Flow of execution (MAP + REDUCE)
+
+Optimiser:
+- Optimises the HiveSQL queries for faster execution.
+ select - where - groupby - limit (DAG)
+
+Executor:
+- Executes the task produced by the compliler.
+
+
+Hiveserver2 Architecture:-
+										Hiveserver2  [Multiple sessions instances can be started]
+	                Beeline CLI -------------->			----------------------------------
+										ThriftService
+      python+hive      						      1----------	     ------------2	
+JDBC  ------------>     JDBC app1  --------------->			driver			driver
+									compiler		compiler
+									executor		executor
+	                JDBC app2  --------------->                    ----------	     -------------
+
+         java+hive							   MetaStore (warehouse (metastore_db)) -> common sharing directory b/w other tools for 
+ODBC	------------->	ODBC app3 ---------------->                    -------------------------------------           data processing
+                                                                                Metastore <--> Hadoop <--> HDFS
+
+RPC = Remote Procedure Call
+

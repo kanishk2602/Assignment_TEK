@@ -1,0 +1,165 @@
+HADOOP: (programmed in JAVA)
+Hadoop is a framework that allows distributed processing of large dataset across clusters of commodity computers
+using simple programming models.
+
+Charcteristics of Hadoop:
+Reliable, Economical, Scable, Flexible
+
+RDBMS                                                                    Hadoop
+
+1. structured                             
+2. Limited, no data processing
+3. Standards and Structured
+4. Read once Write many
+5. Reads are fast
+6.
+7.
+8.
+
+
+Hadoop Core Components:
+
+1.) Hadoop Distributed File System (HDFS)  - Storage
+2.) Yet Another Resource Negotiator (YARN) - Resource Management
+3.) MapReduce - Programming Methodology
+
+Spark - it is an open source custer computing framework. It is faster than MapReduce.
+OOZIE - it is a workflow or cordinated system used to manage the hadoop job.
+Airflow - similar to OOZIE but better. Takes job from user and executed (Jobflow)
+
+Hadoop follows master slave architecture.
+Master    -> Rack   -> Slave
+(Name node)          (Data Node)
+
+                                                  HDFS Architecture
+                                                ----------------------
+
+[digram]
+*. Replicas will be stored in such a way that no two same blocks are placed within same data node.
+*. HDFS manages Data Blocks in such a way that it is highly available.
+
+- Name node is a master service that stores meta data of each data blocks (location,size, no of replicas, permissions)
+
+      Cluster --------> Racks -------> Data Node ------> Data Blocks
+(collections of racks)                                                       
+
+HDFS version 2 :
+
+secondary     original         Active                       Standby
+name node    ----------->     name node    ----------->    name node                    Editlogs : Change in FSImage from last snapshot
+------------  FSImage         ------------                 ------------                 FSImage : FSImage is point in time snapshot of HDFS Cluster.
+ FSImage                       FSImage(snap shot)                                       Namespaces : HDFS path to Data Block
+    ^                             ^								     /directory/BlockPoolID/
+    |                             |
+    |                             |
+ EditLogs1                    EditLogs1
+ EditLogs2                    EditLogs2
+------------ <-------------  ------------                 ------------
+             scaned Edit
+	     logs at regular     
+             interval            
+                                 
+                            ------------        ------------       ------------  
+			     Zookeeper           Zookeeper           Zookeeper               (it is connected to all the name nodes)
+			    ------------        ------------       ------------
+                              (leader)            (follower)         (follower)
+                                                     
+- When active name node is down standby namenode will automatically be new active namenode.
+- Zookeeper is a coordinator which check health status of active name node.
+
+{EditLogs is a transaction log that recorde the changes in the HDFS file system or any action performed on the HDFS cluster 
+such as addtion of a new block,replication, deletion etc., It records the changes since the last FsImage was created,
+it then merges the changes into the FsImage file to create a new FsImage file.}
+
+Snapshot is a point-in-time of the image entire file system or a sub tree of a file system.
+
+Q1.) Is hadoop good for processing small no.of large block size or large no of small size block?
+ans-> small no.of large block size as HDFS used large block size to store data, which generates less number of namespaces resulting into less
+      burden on namenode.
+
+	large no of small size block ---> more metadata ---> more resources required by namenode
+
+Q2.) Can multiple clients request to perform Write to your HDFS at same time?
+ans-> No as HDFS follows write once read many.
+
+Q3.) Namenode Safemode : HDFS goes into read only mode. No client will be allowed to perform write operations or update.
+     hdfs dfsadmin -safemode leave
+
+Q4.) What is heartbeat in HDFS?
+ans-> It is a signal which is sent from datanode to namenode periodically to Namenode.
+
+Q5.) What is fsck in hadoop?
+ans-> (file system consistency check) Check replicas, check block size is managed or not.
+
+Q6.) What happens when a datanode goes down to replicas of DataBlocks?
+ans-> When the datanode goes down new replicas of blocks present in datanode will be created.
+      When the datanode which was down is up again the newly created datablocks will automatically deleted.
+
+Q7.) How many blocks will be created for a file size of 130MB? What will be sizes of datablocks?
+ans-> 2 blocks. One of 128 mb and another of 2mb.
+
+Q8.) What is Disc Balancer in HDFS?
+ans-> Balances data evenly across disc within datanode.
+
+
+                                       YARN (Yet Another Resource Negotiator)
+                                     ------------------------------------------
+
+
+
+                   Node status is sent by node manager                                   --------------------  slave node
+											   ---------
+ 											   container  ------> AppMaster
+											   ---------
+
+											 -------------------- node manager 1
+
+      Resource manager
+  	   -----------------------------------------------------
+
+		 -----------------        ----------------                               ---------------------
+user1 	 	 Job Scheduler    ------>   Application                                   -----------
+user2				     	     manager	                                   container
+				                                                          -----------
+	       	 -----------------        ----------------                               --------------------- node manager 2
+
+     	   -----------------------------------------------------
+                 Master Node
+											 ---------------------
+A user can submit job (python program, query, JAVA)					  ---------
+											  container   ------> AppMaster
+											  ---------              ^
+											  ---------              |
+											  container   ------------ 
+											  ---------
+											 --------------------- node manager 3
+
+
+
+Job Scheduler - it works as pure scheduler. It does play role in executing job.
+	      - allocate the resource to each job.
+	      - schedulers schedule job by following (capacity, fair,FIFO)	 
+
+Application Manager - responsible for accepting job from scheduler.It will monitor the job status(earlier this was managed by job tracker in version 1.0)
+	 	    - Application manager negotiates with node manager on resources.
+		    - Monitor the running job status send by AppMaster.
+		    - It restarts job on job execution faliure.
+
+Application Master - it will be running one per each job submitted.
+		   - managing multiple containers and monitoring their resource usage.
+		   - appmaster destroys itself after successful completion of job.
+
+Node Manager - it sends signal to resource manager at regular interval.
+             - Node manager is slave service.
+	     - Node manager allocates containers and application master.
+
+
+
+localhost:50070 -> Hadoop
+localhost:8088 -> YARN
+
+LINUX:
+jps
+1. start-dfs.sh && start-yarn.sh
+2. stop-dfs.sh && stop-yarn.sh
+	

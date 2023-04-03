@@ -1,0 +1,20 @@
+Hadoop Installation:
+1.) Standalone (useless) - all services runs in same JVM
+2.) Pseudo Distributed - all services runs in separate JVM and same machine
+3.) Fully Distributed - all services runs in separate node (master service -> name node and resource manager,  salve servie -> data node, node manager)
+
+Linux Commands:
+
+
+chmod permission filename/foldername
+permission --> read -> 4
+	   --> write -> 2
+   	   --> execute -> 1
+(user,group,other)
+
+HDFS main files:
+
+core-site.xml
+hdfs-site.xml
+mapred-site.xml
+

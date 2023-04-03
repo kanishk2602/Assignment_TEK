@@ -1,0 +1,30 @@
+Hadoop High Level Architecture:
+
+                                                              HADOOP
+							      ---------------------------------------				Structured Streaming
+SQL
+                                                                    Realtime ----> HBase(noSQL)            Spark streaming	
+OLTP																Spark MLlib
+
+Cloud Main
+Frames                                   Data Ingestion Layer
+					 (Flume/Sqoop/Kafka)
+XML External
+APP
+                                                                     HDFS ---> ETL --->  metastoreDB
+Webservices								      (Hive)     (SQL/Derby)
+(Access Logs and							  ad-hoc queries
+Error Logs)													Reporting	Visualization (Power BI, Tableau)
+														database	  layer	
+								   Job1 Job2 Job3			    (MongoDB,RDBMS,
+								  (batch processing)			     Cloud)
+								(job is running in nodes)
+							    ------------------------------------------
+
+
+Hive Incremental Data Laad:
+
+mySQL(data is getting
+updated e.g. existing
+user details getting updated
+and new users are getting added)

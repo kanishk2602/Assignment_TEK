@@ -1,0 +1,27 @@
+SQOOP commands:
+---------------
+1. mysql
+command : mysql -u root -p <press enter>
+hadoop@123
+
+2.create database;
+3.show databases;
+4.use dbname;
+5.create table table_name ();
+6.insert values;
+
+6. Sqoop Import
+sqoop import --connect jdbc:mysql:localhost/databasename --username root --password hadoop@123 -- table emptable -m 1 --target-dir '/output' 
+
+SQOOP export
+
+1. command : mysql -u root -p <press enter>
+hadoop@123
+2. change database
+3.create table table_name ();
+
+4. sqoop export --connect jdbc:mysql://localhost/databasename --username root --password hadoop@123 --export-dir
+
+
+Sqoop job
+---------

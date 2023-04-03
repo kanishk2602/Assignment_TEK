@@ -1,0 +1,57 @@
+Structured data :
+*. Data will be following single format, with data arranged in a tabular format.
+
+Semi structured data: data will have some format but there is no common format.
+1.) JSON -> key, vaue
+2.) XML -> tags
+3.) CSV
+4.) Big Data file formats : Parquet, AVRO, ORC (compressed file formats)
+
+Unstructured Data : there is no structure. Eg. audio, video, images, flat files, signals, PDF, word doc.
+Batch : 
+
+
+DATA SOURCE--> DATA INGESTION LAYER --> DATA COLLECTOR LAYER --> DATA STORAGE LAYER --> DATA PROCESSING LAYER --> DATA QUERY LAYER --> ANALYTICS ENGINE --> DATA VISUALIZATION LAYER
+										    <--                                            <--
+
+BIG DATA TOOLS:
+
+a.) Data Ingestion : Migrate data from one location to another location
+Tools :->
+
+1. SQOOP (SQL to Hadoop) : migrating the data from structured storage to Hadoop (HDFS)-->(storage of Hadoop)
+			 : It is bidirectional tool
+
+                   
+                        DBMS----------->SQOOP---------->HDFS
+                            <-----------     <----------
+              (structured source)                   (destination)
+           [MySQL,SQLite,OracleDB etc.]
+
+2. FLUME : Ingestion of stream data from source (Twitter,IPaddress or any live source).
+	   All configurations are added in flume.config file.
+	   If you want to ingest event data such as streaming data, sensor data, or log files.
+   FLUME.config -----> source 
+	        -----> sink (destination)
+	        -----> channel
+
+
+b.) Data Collection (temporary location) : KAFKA (Not part of Hadoop ecosystem.)
+
+c.) Data Storage : S3, HDFS
+
+d.) Data Processing : 
+	Batch Processing* (data storage is compulsory) - it is a computing strategy that involves processing data in large sets.
+						       - Tools : HIVE , SPARK, PIG, (Apache)
+						       - Programing method - Mapreduce
+	Stream Processing - it is the practice over individual data items as they move through a system.
+			  - Tools : SPARK Streaming
+	Hybrid Processing - Spark
+
+e.) Data Query : Spark SQL, HIVE, Presto, amazon Redshift
+
+f.) Analytics Engine : Statistical, Semantic, Predictive, Text Analytics
+	Tools - Python, JAVA, Scala
+	      - Spark MLlib
+
+g.) Data Visualization : Power BI, MS Azure, Tableau

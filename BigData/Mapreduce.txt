@@ -1,0 +1,31 @@
+Mapreduce Process
+
+Election example : Map only -> reducer
+
+*. Reducer is used only when aggregate operations are done.
+*. Only mapper job (done when aggregate operations are not required) is possible but only reducer job is not possible.
+MAPPER JOB + REDUCER JOB
+
+Input -> Input Split -> Record Reader(automatically done) -> Map -> intermediate o/p in disc
+no of blocks = no of mappers
+no of reducer = no of nodes
+
+input split : we define the delimiter(space, comma, semi colon)
+record reader : makes key value pair.
+Partitioning : it ensures that same keys goes to the same reducer.
+
+*$.After map job finishes it will save intermediate output in HDFS as temporary file. For next step file will be read again from HDFS.
+
+hadoop is easy    input split  	 hadoop      record reader   	(1, hadoop)  [key,value]    Map       (hadoop,1)           Partitioning     (easy,{1,1})    Reducer     (easy,2)
+framework to     ------------>   is         -------------->  	(2,is)                     ------>    (is,1)         (*$) ------------->    (is,{1,1,1})  ------------>  (is,3)           
+work on python       		 easy .....     		(3,easy).....                         (easy,{1,1})        shuffeling+sortig  (hadoop,1)
+
+                                                                                           map ss
+
+
+mapreduce is	    mapreduce      (1,mapreduce)                                                                                           (mapreduce,1)                (mapreduce,1)
+is programming   -> is......    -> (2,is)....    -------------------------------------------------------------------------------------->   (programming,1) -----------> (programming,1)
+methodlogy
+
+Partitioning works on both the blocks and if word is present in both blocks it will be removed from the second block abd added to first block.
+ 

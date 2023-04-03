@@ -1,0 +1,26 @@
+Introduction to DataWarehouse:
+
+1.) DWH is built by combining data rom multiple sources (variety of data) and that supports Analytical Reporting.
+
+Fact VS Dimension Table :
+
+*. A fact table contains measurement, facts, foreign keys, to dimension table. Fact Table is primary table in dimension table.
+*. A dimension table contains dimension of fact table. Comapanion table to fact table that contains descriptive attributes to be used as query.
+   How dimension table is joined to fact table -> foreign keys
+   Dimension table can also contain one or more hierarchical relationship.
+
+Keys :-
+*. Primary key in fact table is mapped as foreign key to dimension table.
+*. Dimension table has primary key column that uniquely identifies each dimension.
+
+Design :-
+*. Fact table is defined by their grain or its most atomic level.
+*. Dimension Table should be wordly, discriptive, complete and quality assured.
+
+Fact table contains keys.
+
+STAR vs SNOWFLAKE schema :
+
+*. A star schema has denormalized dimension tables, while a snowflake schema has normalized dimension tables.
+*. A star schema is easier to design and implement than a snowflake schema.
+*. A star schema can be more efficient to query than a snowflake schema, because there are fewer JOINs between tables.

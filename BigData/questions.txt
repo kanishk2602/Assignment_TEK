@@ -1,0 +1,70 @@
+HADOOP:
+ copyFromLocal : this restricts your copy from file to local source
+ put : can take files from multiple sources
+
+SQOOP:
+ import, export, import-all-tables, export-all-tables, job, eval
+
+sqoop - import tables using query
+sqoop import-connect database-username-password-query
+
+How to change the blocksize for particular file in HDFS
+hdfs dfs -hdfs.dfs.blocksize=new blocksize in bytes
+
+MAPREDUCE:
+
+Q.What is combiner?
+Combiner is a pre reducer step (before shuffeling and sorting)
+
+Q.what is default datawarehouse in hive?
+derby database
+
+Q.What is the command to bucketthe tables?
+clustered by (column name) into no of buckets
+
+Q.What are valid hadoop Configuration files?
+hadoop-env.sh
+core-site.xml
+yarn-site.xml
+mapred-site.xml
+hdfs-site.xml
+
+Q. Distributed cache can be used in ____
+a. mapper job
+b. reducer job (ans)
+
+Q. HDFS command to check inconsistancy
+hdfs -fsck/path to dir/path to blocks
+
+Q. Checkpoint node download FSImage and editlogs from active namenode, it merge existing fsimage with edit logs and store modified fsimage to
+a. into persistent storage
+b. into active namenode (ans)
+c. into secondary namenode
+d. into datanode
+
+Q. HDFS command to get the current status of safe mode of namenode?
+ans-> hdfs dfsadmin -safemode get
+
+Q. hdfs allows client to read a file which is already opened for write operations by other client?
+False
+write once read many
+
+Q. What happens exactly in namenode safemode?
+ANS-> it maintenance state of namenode (fsimage+editlog to fsimage -> moves to backup node)
+      safemode changes cluster into read only mode
+
+Q. Hive Partitioning vs bucketing
+partitioning is map only job, bucketing is reducer job
+partitioning is static as well as dynamic
+
+Q. In Hive you can copy which of the following:
+a. schema without data (ans)
+b. data without schema
+
+
+
+
+
+
+
+

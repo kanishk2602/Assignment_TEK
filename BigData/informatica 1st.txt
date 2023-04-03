@@ -1,0 +1,39 @@
+DBMS is:
+*. File system 
+*. Stand alone - it cannot be shared in the network.
+	       - it can't be client server architecture so cannot make enterprise applications.
+	       - 
+
+database - operaional system
+datawarehouse - management system 
+
+Granularity in datawarehouse - it tells the level of analysis we need to do (hourly, weekly, monthly basis)
+
+
+*. Log files are generated only when client server architecture wants it.
+
+select statement does -> parsing execution fetching
+parsing goes to metadata 
+execution happens in memory
+fetching is done by cursor.
+
+metadata is most important.
+
+- Dimension model refers to datawarehouse. 
+
+Kimball theory :
+* Select business process
+* Declare the grain (Granularity)
+* Choose dimension 
+* Identify facts
+
+- Fact table is the summaried data that is stored in a star schema under data mart.
+- A data mart can consist of one or multiple star schema.
+- Dimension are descriptive in nature which are part of star schema.
+
+-  
+
+- data collected in fact table is historic.
+- 
+
+Inmon theory
