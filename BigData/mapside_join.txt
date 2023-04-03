@@ -1,0 +1,74 @@
+create database if not exists mapjoin;
+
+use mapjoin;
+
+drop table if exists employee;
+
+create table if not exists employee (Empid int,first_name varchar(50),last_name varchar(50),
+gender varchar(5),attendance int,department varchar(30))
+row format delimited 
+fields terminated by ','
+tblproperties('skip.header.line.count' = "1");
+
+load data local inpath '/home/hadoop/Downloads/MAPJOIN_DATA.csv'
+overwrite into table employee;
+
+drop table if exists department;
+
+create table if not exists department (Empid int,first_name varchar(30), gender	varchar(30), dept varchar(30), Salary int)
+row format delimited 
+fields terminated by ','
+tblproperties('skip.header.line.count' = "1");
+
+load data local inpath '/home/hadoop/Downloads/MAPJOIN_DATA1.csv'
+overwrite into table department;
+
+-- INNER JOIN (MAP/REDUCE)
+select s.Empid, s.gender, s.attendance, department.dept, department.salary from employee s JOIN 
+department ON s.first_name = department.first_name;
+
+
+-- enable map side join in hive
+set hive.auto.convert.join=true;
+set hive.auto.convert.join.use.nonstaged=true;
+
+
+-- Default size of the hive table 
+set hive.mapjoin.smalltable.filesize = 30000000;
+
+
+select /*+ MAPJOIN(department) */ s.Empid, s.gender, s.attendance, department.dept, department.salary 
+from employee s JOIN department ON s.first_name = department.first_name;
+
+
+-- Buketing with MAPJOIN Operation
+
+-- Enable Bucketing
+set hive.enforce.bucketing = true;
+
+create table if not exists employee_bucket (Empid int,first_name varchar(50),last_name varchar(50),gender varchar(5),attendance int,department varchar(30))
+clustered by (first_name) into 4 buckets
+row format delimited
+fields terminated by ','
+tblproperties('skip.header.line.count' = "1");
+
+create table if not exists dept_bucket (Empid int,first_name varchar(30), gender varchar(30), dept varchar(30), Salary int)
+clustered by (first_name) into 5 buckets
+row format delimited
+fields terminated by ','
+tblproperties('skip.header.line.count' = "1");
+
+insert into employee_bucket select * from employee;
+
+insert into dept_bucket select * from department;
+
+-- select * from employee_bucket limit 10;
+
+-- Bucket MAPJoin
+set hive.optimize.bucketmapjoin = true;
+
+select /*+ MAPJOIN(dept_bucket) */ s.Empid, s.gender, s.attendance, dept_bucket.dept, dept_bucket.salary from employee_bucket s JOIN dept_bucket ON s.first_name = dept_bucket.first_name;
+
+
+ 
+
