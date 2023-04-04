@@ -38,3 +38,11 @@ Kimball theory :
 - 
 
 Inmon theory
+
+Time Dimension:-
+- It is used to define granularity level.
+- Granularity is based on redunduncy factor.
+- 
+
+
+
